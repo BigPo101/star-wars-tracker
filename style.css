@@ -1,0 +1,22 @@
+body {
+  background: black;
+  color: #ffe81f;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+}
+
+h1 {
+  text-shadow: 0 0 10px #ffe81f;
+}
+
+.item {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ffe81f;
+  cursor: pointer;
+}
+
+.watched {
+  text-decoration: line-through;
+  color: gray;
+}
