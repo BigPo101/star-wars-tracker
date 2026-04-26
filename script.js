@@ -1,92 +1,79 @@
-// 🔒 SIMPLE PASSWORD (change this)
-const PASSWORD = "jedi123";
+// ⭐ EDIT YOUR PROGRESS HERE
+let data = [
+  {
+    id: 0,
+    title: "The Clone Wars",
+    type: "show",
+    description: "Animated series set during the Clone Wars.",
+    poster: "https://upload.wikimedia.org/wikipedia/en/6/6c/Star_Wars_The_Clone_Wars_poster.jpg",
+    seasons: [22,22,22,22,20,13,12],
 
-let isOwner = false;
+    // 🔥 CHANGE THESE
+    season: 3,
+    episode: 5
+  },
+  {
+    id: 1,
+    title: "Revenge of the Sith",
+    type: "movie",
+    description: "Anakin becomes Darth Vader.",
+    poster: "https://upload.wikimedia.org/wikipedia/en/5/5f/Star_Wars_Episode_III_Revenge_of_the_Sith_poster.jpg",
 
-// Ask for password
-const input = prompt("Enter password to edit progress (or cancel for view only):");
-if (input === PASSWORD) {
-  isOwner = true;
-}
+    // 🔥 CHANGE THIS
+    watched: true
+  },
+  {
+    id: 2,
+    title: "The Mandalorian",
+    type: "show",
+    description: "A bounty hunter travels the galaxy.",
+    poster: "https://upload.wikimedia.org/wikipedia/en/c/cb/The_Mandalorian_season_1_poster.jpg",
+    seasons: [8,8,8],
 
-// 📦 DATA (you can expand this later)
-const starWars = [
-  { title: "The Acolyte", type: "show", season: 1, episode: 1 },
-  { title: "Episode I – The Phantom Menace", type: "movie", watched: false },
-  { title: "Episode II – Attack of the Clones", type: "movie", watched: false },
-  { title: "The Clone Wars", type: "show", season: 1, episode: 1 },
-  { title: "Episode III – Revenge of the Sith", type: "movie", watched: false },
-  { title: "The Bad Batch", type: "show", season: 1, episode: 1 },
-  { title: "Solo", type: "movie", watched: false },
-  { title: "Obi-Wan Kenobi", type: "show", season: 1, episode: 1 },
-  { title: "Rebels", type: "show", season: 1, episode: 1 },
-  { title: "Andor", type: "show", season: 1, episode: 1 },
-  { title: "Rogue One", type: "movie", watched: false },
-  { title: "Episode IV – A New Hope", type: "movie", watched: false },
-  { title: "Episode V – The Empire Strikes Back", type: "movie", watched: false },
-  { title: "Episode VI – Return of the Jedi", type: "movie", watched: false },
-  { title: "The Mandalorian", type: "show", season: 1, episode: 1 },
-  { title: "The Book of Boba Fett", type: "show", season: 1, episode: 1 },
-  { title: "Ahsoka", type: "show", season: 1, episode: 1 },
-  { title: "Episode VII – The Force Awakens", type: "movie", watched: false },
-  { title: "Episode VIII – The Last Jedi", type: "movie", watched: false },
-  { title: "Episode IX – The Rise of Skywalker", type: "movie", watched: false }
+    // 🔥 CHANGE THESE
+    season: 1,
+    episode: 2
+  }
 ];
 
-// 📥 Load saved progress
-let saved = JSON.parse(localStorage.getItem("progress"));
-if (saved) {
-  saved.forEach((s, i) => {
-    starWars[i] = s;
-  });
-}
+// SAVE DATA
+localStorage.setItem("progress", JSON.stringify(data));
 
 const grid = document.getElementById("grid");
 
-// 🎬 Build UI
-starWars.forEach((item, index) => {
+// BUILD CARDS
+data.forEach(item => {
   const card = document.createElement("div");
-  card.classList.add("card");
-
-  if (item.watched) {
-    card.classList.add("watched");
-  }
+  card.className = "card";
 
   card.innerHTML = `
+    <img src="${item.poster}" class="poster">
     <h3>${item.title}</h3>
     <div class="progress">
-      ${item.type === "show"
-        ? `Season ${item.season}, Episode ${item.episode}`
-        : (item.watched ? "Watched" : "Not Watched")}
+      ${
+        item.type === "show"
+          ? `S${item.season} E${item.episode}`
+          : (item.watched ? "Watched" : "Not Watched")
+      }
     </div>
   `;
 
-  // 🎮 CLICK FUNCTION
-  card.addEventListener("click", () => {
-    if (!isOwner) return; // 🔒 viewers can't edit
-
-    if (item.type === "movie") {
-      item.watched = !item.watched;
-      card.classList.toggle("watched");
-    } else {
-      item.episode++;
-
-      // simple episode reset logic
-      if (item.episode > 10) {
-        item.episode = 1;
-        item.season++;
-      }
-    }
-
-    // Update text
-    card.querySelector(".progress").textContent =
-      item.type === "show"
-        ? `Season ${item.season}, Episode ${item.episode}`
-        : (item.watched ? "Watched" : "Not Watched");
-
-    // 💾 Save progress
-    localStorage.setItem("progress", JSON.stringify(starWars));
-  });
+  card.onclick = () => {
+    localStorage.setItem("selected", item.id);
+    window.location.href = "detail.html";
+  };
 
   grid.appendChild(card);
 });
+
+// PROGRESS BAR
+let total = data.length;
+let completed = 0;
+
+data.forEach(item => {
+  if (item.type === "movie" && item.watched) completed++;
+  if (item.type === "show" && (item.season > 1 || item.episode > 1)) completed++;
+});
+
+let percent = (completed / total) * 100;
+document.getElementById("progressBar").style.width = percent + "%";
