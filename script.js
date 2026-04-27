@@ -1,37 +1,54 @@
 let data = [
   {
     id: 1,
+    title: "The Phantom Menace",
+    type: "movie",
+    poster: "https://upload.wikimedia.org/wikipedia/en/4/4f/Star_Wars_Phantom_Menace_poster.jpg",
+    description: "The Jedi discover Anakin Skywalker, a child with extraordinary Force sensitivity. As political tensions rise, a hidden Sith threat begins to emerge.",
+    watched: false
+  },
+  {
+    id: 2,
+    title: "Attack of the Clones",
+    type: "movie",
+    poster: "https://upload.wikimedia.org/wikipedia/en/5/5d/Attack_of_the_Clones_poster.jpg",
+    description: "The galaxy edges toward war as the Clone Army is revealed. Anakin struggles with attachment and fear, setting the stage for the coming darkness.",
+    watched: false
+  },
+  {
+    id: 3,
     title: "The Clone Wars",
     type: "show",
     poster: "https://upload.wikimedia.org/wikipedia/en/6/6c/Star_Wars_The_Clone_Wars_poster.jpg",
-    description: "An animated series exploring the Clone Wars between the Republic and Separatists. It follows Anakin Skywalker, Obi-Wan Kenobi, and Ahsoka Tano as they face moral conflict, war, and the rising influence of the Sith.",
+    description: "The Clone Wars rage across the galaxy. Jedi generals lead armies while facing moral conflict, political manipulation, and the rise of the Sith.",
     seasons: [22,22,22,22,20,13,12],
     season: 3,
     episode: 5
   },
   {
-    id: 2,
+    id: 4,
     title: "Revenge of the Sith",
     type: "movie",
     poster: "https://upload.wikimedia.org/wikipedia/en/5/5f/Star_Wars_Episode_III_Revenge_of_the_Sith_poster.jpg",
-    description: "As the Clone Wars reach their end, Anakin Skywalker is seduced by the dark side of the Force and becomes Darth Vader, leading to the fall of the Jedi Order and the rise of the Galactic Empire.",
+    description: "Anakin Skywalker is seduced by Darth Sidious and becomes Darth Vader, leading to the fall of the Jedi Order and the rise of the Galactic Empire.",
     watched: true
   },
   {
-    id: 3,
+    id: 5,
     title: "The Mandalorian",
     type: "show",
     poster: "https://upload.wikimedia.org/wikipedia/en/c/cb/The_Mandalorian_season_1_poster.jpg",
-    description: "A lone bounty hunter travels the outer rim of the galaxy, discovering a mysterious child known as Grogu. Their journey explores survival, honor, and the remnants of the fallen Empire.",
+    description: "A lone bounty hunter travels the outer rim of the galaxy, protecting a mysterious child named Grogu while remnants of the Empire attempt to rebuild power.",
     seasons: [8,8,8],
     season: 1,
     episode: 2
   }
 ];
 
+localStorage.setItem("data", JSON.stringify(data));
+
 const grid = document.getElementById("grid");
 
-// CARDS
 data.forEach(item => {
   const card = document.createElement("div");
   card.className = "card";
@@ -49,7 +66,6 @@ data.forEach(item => {
 
   card.onclick = () => {
     localStorage.setItem("selected", item.id);
-    localStorage.setItem("data", JSON.stringify(data));
     window.location.href = "detail.html";
   };
 
