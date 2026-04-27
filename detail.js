@@ -3,20 +3,32 @@ let id = localStorage.getItem("selected");
 
 let item = data.find(d => d.id == id);
 
-document.getElementById("poster").src = item.poster;
-document.getElementById("title").textContent = item.title;
-document.getElementById("desc").textContent = item.description;
+document.body.innerHTML = `
+  <div style="max-width:900px;margin:auto;padding:30px;">
+    
+    <img src="${item.poster}" style="
+      width:100%;
+      border-radius:16px;
+      box-shadow:0 0 40px rgba(255,232,31,0.2);
+    ">
 
-const extra = document.getElementById("extra");
+    <h1 style="text-align:center;margin-top:20px;">
+      ${item.title}
+    </h1>
 
-if (item.type === "movie") {
-  extra.innerHTML = `<h3>Status: ${item.watched ? "Watched" : "Not Watched"}</h3>`;
-} else {
-  extra.innerHTML = `<h3>Current: S${item.season} E${item.episode}</h3>`;
+    <p style="color:#bbb;line-height:1.6;">
+      ${item.description}
+    </p>
 
-  item.seasons.forEach((eps, i) => {
-    let div = document.createElement("div");
-    div.innerHTML = `<h4>Season ${i+1}</h4>Episodes: ${eps}`;
-    extra.appendChild(div);
-  });
-}
+    <div style="margin-top:20px;">
+      ${
+        item.type === "movie"
+        ? `<h3>Status: ${item.watched ? "Watched" : "Not Watched"}</h3>`
+        : `<h3>Current: S${item.season} E${item.episode}</h3>`
+      }
+    </div>
+
+    <br>
+    <a href="index.html" style="color:#ffe81f;">← Back</a>
+  </div>
+`;
