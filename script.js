@@ -1,43 +1,62 @@
-// ⭐ EDIT YOUR PROGRESS HERE
 let data = [
   {
     id: 0,
-    title: "The Clone Wars",
+    title: "The Acolyte",
     type: "show",
-    description: "Animated series set during the Clone Wars.",
-    poster: "https://upload.wikimedia.org/wikipedia/en/6/6c/Star_Wars_The_Clone_Wars_poster.jpg",
-    seasons: [22,22,22,22,20,13,12],
-
-    // 🔥 CHANGE THESE
-    season: 3,
-    episode: 5
+    poster: "https://upload.wikimedia.org/wikipedia/en/3/3e/The_Acolyte_poster.jpg",
+    description: "Set in the High Republic era, The Acolyte explores a dark mystery involving a former Padawan and a Jedi Master as tensions rise within the Order. The series dives into the early roots of the Sith and the growing corruption hidden beneath the surface of the Jedi’s golden age.",
+    seasons: [8],
+    season: 1,
+    episode: 1
   },
   {
     id: 1,
-    title: "Revenge of the Sith",
+    title: "The Phantom Menace",
     type: "movie",
-    description: "Anakin becomes Darth Vader.",
-    poster: "https://upload.wikimedia.org/wikipedia/en/5/5f/Star_Wars_Episode_III_Revenge_of_the_Sith_poster.jpg",
-
-    // 🔥 CHANGE THIS
-    watched: true
+    poster: "https://upload.wikimedia.org/wikipedia/en/4/4f/Star_Wars_Phantom_Menace_poster.jpg",
+    description: "The Jedi discover young Anakin Skywalker, a boy with extraordinary Force potential. Meanwhile, the Sith re-emerge after centuries in hiding, and political tensions threaten the Republic.",
+    watched: false
   },
   {
     id: 2,
+    title: "Attack of the Clones",
+    type: "movie",
+    poster: "https://upload.wikimedia.org/wikipedia/en/5/5d/Attack_of_the_Clones_poster.jpg",
+    description: "As the galaxy teeters on the brink of war, Jedi Knight Anakin Skywalker grows increasingly conflicted. The Clone Wars begin to take shape in the shadows of political manipulation.",
+    watched: false
+  },
+  {
+    id: 3,
+    title: "The Clone Wars",
+    type: "show",
+    poster: "https://upload.wikimedia.org/wikipedia/en/6/6c/Star_Wars_The_Clone_Wars_poster.jpg",
+    description: "An animated series following the brutal Clone Wars between the Republic and Separatists. It explores Anakin, Obi-Wan, and Ahsoka as they face moral struggles and the growing influence of the dark side.",
+    seasons: [22,22,22,22,20,13,12],
+    season: 1,
+    episode: 1
+  },
+  {
+    id: 4,
+    title: "Revenge of the Sith",
+    type: "movie",
+    poster: "https://upload.wikimedia.org/wikipedia/en/5/5f/Star_Wars_Episode_III_Revenge_of_the_Sith_poster.jpg",
+    description: "The Clone Wars reach their devastating conclusion. Anakin Skywalker is seduced by Darth Sidious and transforms into Darth Vader, bringing about the fall of the Jedi Order.",
+    watched: false
+  },
+  {
+    id: 5,
     title: "The Mandalorian",
     type: "show",
-    description: "A bounty hunter travels the galaxy.",
     poster: "https://upload.wikimedia.org/wikipedia/en/c/cb/The_Mandalorian_season_1_poster.jpg",
+    description: "A lone bounty hunter in the outer reaches of the galaxy takes on a mysterious child known as Grogu. Their journey explores honor, survival, and the remnants of the fallen Empire.",
     seasons: [8,8,8],
-
-    // 🔥 CHANGE THESE
     season: 1,
-    episode: 2
+    episode: 1
   }
 ];
 
-// SAVE DATA
-localStorage.setItem("progress", JSON.stringify(data));
+// SAVE
+localStorage.setItem("data", JSON.stringify(data));
 
 const grid = document.getElementById("grid");
 
@@ -50,12 +69,11 @@ data.forEach(item => {
     <img src="${item.poster}" class="poster">
     <h3>${item.title}</h3>
     <div class="progress">
-      ${
-        item.type === "show"
-          ? `S${item.season} E${item.episode}`
-          : (item.watched ? "Watched" : "Not Watched")
-      }
+      ${item.type === "show"
+        ? `S${item.season} E${item.episode}`
+        : (item.watched ? "Watched" : "Not Watched")}
     </div>
+    <div class="desc">${item.description.substring(0, 120)}...</div>
   `;
 
   card.onclick = () => {
@@ -75,5 +93,5 @@ data.forEach(item => {
   if (item.type === "show" && (item.season > 1 || item.episode > 1)) completed++;
 });
 
-let percent = (completed / total) * 100;
-document.getElementById("progressBar").style.width = percent + "%";
+document.getElementById("progressBar").style.width =
+  (completed / total) * 100 + "%";
