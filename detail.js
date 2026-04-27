@@ -1,36 +1,30 @@
-let data = JSON.parse(localStorage.getItem("progress"));
-let selected = localStorage.getItem("selected");
+let data = JSON.parse(localStorage.getItem("data"));
+let id = localStorage.getItem("selected");
 
-let item = data.find(d => d.id == selected);
+let item = data.find(d => d.id == id);
 
 document.getElementById("title").textContent = item.title;
 document.getElementById("description").textContent = item.description;
 
 const content = document.getElementById("content");
 
-// MOVIE VIEW
+// MOVIE
 if (item.type === "movie") {
-  const status = document.createElement("p");
-  status.textContent = item.watched ? "Watched" : "Not Watched";
-  content.appendChild(status);
+  content.innerHTML = `<h3>Status: ${item.watched ? "Watched" : "Not Watched"}</h3>`;
 }
 
-// SHOW VIEW
+// SHOW
 else {
-  item.seasons.forEach((count, sIndex) => {
-    const seasonDiv = document.createElement("div");
-    seasonDiv.innerHTML = `<h3>Season ${sIndex + 1}</h3>`;
+  item.seasons.forEach((eps, sIndex) => {
+    const season = document.createElement("div");
+    season.innerHTML = `<h3>Season ${sIndex + 1}</h3>`;
 
-    for (let e = 1; e <= count; e++) {
-      const ep = document.createElement("span");
-      ep.textContent = `E${e} `;
-      seasonDiv.appendChild(ep);
+    for (let i = 1; i <= eps; i++) {
+      season.innerHTML += `E${i} `;
     }
 
-    content.appendChild(seasonDiv);
+    content.appendChild(season);
   });
 
-  const current = document.createElement("p");
-  current.textContent = `Current: Season ${item.season}, Episode ${item.episode}`;
-  content.appendChild(current);
+  content.innerHTML += `<p>Current: S${item.season} E${item.episode}</p>`;
 }
