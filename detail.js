@@ -3,28 +3,20 @@ let id = localStorage.getItem("selected");
 
 let item = data.find(d => d.id == id);
 
+document.getElementById("poster").src = item.poster;
 document.getElementById("title").textContent = item.title;
-document.getElementById("description").textContent = item.description;
+document.getElementById("desc").textContent = item.description;
 
-const content = document.getElementById("content");
+const extra = document.getElementById("extra");
 
-// MOVIE
 if (item.type === "movie") {
-  content.innerHTML = `<h3>Status: ${item.watched ? "Watched" : "Not Watched"}</h3>`;
-}
+  extra.innerHTML = `<h3>Status: ${item.watched ? "Watched" : "Not Watched"}</h3>`;
+} else {
+  extra.innerHTML = `<h3>Current: S${item.season} E${item.episode}</h3>`;
 
-// SHOW
-else {
-  item.seasons.forEach((eps, sIndex) => {
-    const season = document.createElement("div");
-    season.innerHTML = `<h3>Season ${sIndex + 1}</h3>`;
-
-    for (let i = 1; i <= eps; i++) {
-      season.innerHTML += `E${i} `;
-    }
-
-    content.appendChild(season);
+  item.seasons.forEach((eps, i) => {
+    let div = document.createElement("div");
+    div.innerHTML = `<h4>Season ${i+1}</h4>Episodes: ${eps}`;
+    extra.appendChild(div);
   });
-
-  content.innerHTML += `<p>Current: S${item.season} E${item.episode}</p>`;
 }
