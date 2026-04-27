@@ -1,43 +1,89 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: radial-gradient(circle at top, #0a0a0a, black);
+  background: radial-gradient(circle at top, #050505, #000);
   color: #ffe81f;
-  text-align: center;
-  overflow-x: hidden;
 }
 
-/* cinematic starfield */
+/* STARFIELD (more cinematic, less noisy) */
 body::before {
   content: "";
   position: fixed;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(white 1px, transparent 1px);
-  background-size: 60px 60px;
-  opacity: 0.25;
+  inset: 0;
+  background-image: radial-gradient(white 1px, transparent 1px);
+  background-size: 70px 70px;
+  opacity: 0.2;
   animation: drift 120s linear infinite;
   z-index: -1;
 }
 
 @keyframes drift {
   from { transform: translate(0,0); }
-  to { transform: translate(-600px,-600px); }
+  to { transform: translate(-400px,-600px); }
 }
 
-/* title */
+/* TITLE */
 h1 {
+  text-align: center;
   margin: 20px;
-  text-shadow: 0 0 25px #ffe81f;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
+  text-shadow: 0 0 20px #ffe81f;
 }
 
-/* progress */
+/* GRID */
+#grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px;
+  padding: 30px;
+}
+
+/* CARD (clean + modern) */
+.card {
+  background: rgba(20,20,20,0.85);
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.3s;
+  border: 1px solid rgba(255,232,31,0.2);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 35px rgba(255,232,31,0.25);
+}
+
+/* POSTER */
+.poster {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+}
+
+/* TEXT BLOCK */
+.card h3 {
+  margin: 10px;
+}
+
+.progress {
+  margin: 0 10px 10px;
+  color: #ffe81f;
+  font-size: 13px;
+}
+
+.desc {
+  font-size: 12px;
+  color: #aaa;
+  padding: 0 10px 15px;
+  line-height: 1.4;
+}
+
+/* PROGRESS BAR */
 #progressContainer {
   width: 80%;
-  height: 14px;
+  height: 10px;
+  margin: 20px auto;
   background: #111;
-  margin: 15px auto;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -45,80 +91,5 @@ h1 {
 #progressBar {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #ffe81f, #ffb700);
-}
-
-/* GRID */
-#grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 25px;
-  padding: 25px;
-}
-
-/* CARD */
-.card {
-  background: rgba(15,15,15,0.9);
-  border: 1px solid rgba(255,232,31,0.5);
-  border-radius: 14px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 30px rgba(255,232,31,0.4);
-}
-
-/* poster */
-.poster {
-  width: 100%;
-  height: 320px;
-  object-fit: cover;
-}
-
-/* text */
-.card h3 {
-  margin: 10px 0 5px;
-}
-
-.desc {
-  font-size: 12px;
-  color: #aaa;
-  padding: 0 10px 10px;
-}
-
-.progress {
-  font-size: 13px;
-  color: #ffe81f;
-  margin-bottom: 10px;
-}
-
-/* DETAIL PAGE */
-.detail {
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
-  text-align: left;
-}
-
-.detail img {
-  width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 0 25px rgba(255,232,31,0.2);
-}
-
-.detail h2 {
-  text-align: center;
-  margin-top: 15px;
-}
-
-.detail p {
-  color: #ccc;
-  line-height: 1.6;
-}
-
-a {
-  color: #ffe81f;
+  background: linear-gradient(90deg, #ffe81f, #ffb300);
 }
